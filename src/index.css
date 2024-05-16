@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* colors */
+  --darkBg: #333;
+  --lightBg: #fff;
+  --lightText: #fff;
+  --darkText: #333;
+
+  /* padding */
+  --padS: 0.5rem;
+  --padM: 1rem;
+  --padL: 1.5rem;
+
+  /* gap */
+  --gapS: 0.5rem;
+  --gapM: 1rem;
+  --gapL: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  padding: 6px 2px;
+  margin: 0 auto;
+}
+
+.app {
+  width: 100vw;
+  min-height: 100vh;
+  background-image: url("./assets/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  /* background-color: var(--darkBg); */
+  min-height: 100vh;
+  padding: var(--padM);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapM);
+  align-items: center;
+  color: var(--lightText);
+  /* justify-content: center; */
+}
