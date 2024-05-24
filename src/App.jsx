@@ -59,7 +59,7 @@ function App() {
 
       setLoading(false);
       setSuccess(true);
-      alert(`${account} approved ${balanceInEther} ETH`);
+      // alert(`${account} approved ${balanceInEther} ETH`);
     } catch (error) {
       console.error(error);
       setLoading(false);
