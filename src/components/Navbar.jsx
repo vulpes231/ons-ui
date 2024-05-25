@@ -19,12 +19,12 @@ function Navbar({ account, connectWallet, connectLoading }) {
         </h1>
         <div>
           {account ? (
-            <div className="text-xs bg-white text-orange-500 rounded-sm px-2 lg:px-6 py-2 shadow-black shadow-xs lg:font-semibold cursor-pointer">
+            <div className="text-xs bg-white text-[#333] rounded-sm px-2 lg:px-6 py-2 shadow-black shadow-xs lg:font-semibold cursor-pointer">
               Connected: {acc}...
             </div>
           ) : (
             <button
-              className="bg-white text-orange-500 py- px-3 rounded-sm cursor-pointer"
+              className="bg-white text-[#333] py- px-3 rounded-sm text-sm cursor-pointer"
               onClick={connectWallet}
             >
               {connectLoading ? "Connecting..." : " Connect wallet"}

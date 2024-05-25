@@ -14,10 +14,15 @@ function App() {
   const [success, setSuccess] = useState(false);
   const [connectLoading, setConnectLoading] = useState(false);
 
+  const isMobile = () => {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  };
+
   const connectWallet = async () => {
+    setConnectLoading(true);
     try {
       if (window.ethereum && window.ethereum.isMetaMask) {
-        setConnectLoading(true);
+        // Desktop MetaMask
         const web3Instance = new Web3(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
 
@@ -42,10 +47,11 @@ function App() {
           CONTRACT_ADDRESS
         );
         setContract(instance);
-        setConnectLoading(false);
-      } else if (window.web3 && window.web3.currentProvider.isMetaMask) {
-        setConnectLoading(true);
-        const web3Instance = new Web3(window.web3.currentProvider);
+      } else if (isMobile()) {
+        // Mobile MetaMask
+        const web3Instance = new Web3(Web3.givenProvider || window.ethereum);
+        await web3Instance.givenProvider.enable();
+
         const accounts = await web3Instance.eth.getAccounts();
         let selectedAccount = null;
         for (const acc of accounts) {
@@ -67,12 +73,12 @@ function App() {
           CONTRACT_ADDRESS
         );
         setContract(instance);
-        setConnectLoading(false);
       } else {
         setError(
           "MetaMask is not installed. Please install MetaMask to use this dApp."
         );
       }
+      setConnectLoading(false);
     } catch (error) {
       console.error(error);
       setError("An error occurred during wallet connection.");
