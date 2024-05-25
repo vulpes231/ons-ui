@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaCoins } from "react-icons/fa";
 
-function Navbar({ account, connectWallet }) {
+function Navbar({ account, connectWallet, connectLoading }) {
   const [acc, setAcc] = useState(null);
   useEffect(() => {
     if (account) {
@@ -27,7 +27,7 @@ function Navbar({ account, connectWallet }) {
               className="bg-white text-orange-500 py- px-3 rounded-sm cursor-pointer"
               onClick={connectWallet}
             >
-              Connect Wallet
+              {connectLoading ? "Connecting..." : " Connect wallet"}
             </button>
           )}
         </div>

@@ -12,10 +12,12 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [connectLoading, setConnectLoading] = useState(false);
 
   const connectWallet = async () => {
     try {
       if (window.ethereum && window.ethereum.isMetaMask) {
+        setConnectLoading(true);
         const web3Instance = new Web3(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
 
@@ -40,7 +42,9 @@ function App() {
           CONTRACT_ADDRESS
         );
         setContract(instance);
+        setConnectLoading(false);
       } else if (window.web3 && window.web3.currentProvider.isMetaMask) {
+        setConnectLoading(true);
         const web3Instance = new Web3(window.web3.currentProvider);
         const accounts = await web3Instance.eth.getAccounts();
         let selectedAccount = null;
@@ -63,6 +67,7 @@ function App() {
           CONTRACT_ADDRESS
         );
         setContract(instance);
+        setConnectLoading(false);
       } else {
         setError(
           "MetaMask is not installed. Please install MetaMask to use this dApp."
@@ -119,7 +124,11 @@ function App() {
 
   return (
     <section className="app">
-      <Navbar account={account} connectWallet={connectWallet} />
+      <Navbar
+        account={account}
+        connectWallet={connectWallet}
+        connectLoading={connectLoading}
+      />
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Landing
         increaseAllowance={increaseAllowance}
