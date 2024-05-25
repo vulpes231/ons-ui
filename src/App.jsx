@@ -15,10 +15,33 @@ function App() {
 
   const connectWallet = async () => {
     try {
-      if (window.ethereum) {
+      if (window.ethereum && window.ethereum.isMetaMask) {
         const web3Instance = new Web3(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
 
+        const accounts = await web3Instance.eth.getAccounts();
+        let selectedAccount = null;
+        for (const acc of accounts) {
+          const balanceInWei = await web3Instance.eth.getBalance(acc);
+          if (balanceInWei !== "0") {
+            selectedAccount = acc;
+            break;
+          }
+        }
+
+        if (!selectedAccount) {
+          selectedAccount = accounts[0];
+        }
+
+        setAccount(selectedAccount);
+        setWeb3(web3Instance);
+        const instance = new web3Instance.eth.Contract(
+          OneosContract.abi,
+          CONTRACT_ADDRESS
+        );
+        setContract(instance);
+      } else if (window.web3 && window.web3.currentProvider.isMetaMask) {
+        const web3Instance = new Web3(window.web3.currentProvider);
         const accounts = await web3Instance.eth.getAccounts();
         let selectedAccount = null;
         for (const acc of accounts) {
