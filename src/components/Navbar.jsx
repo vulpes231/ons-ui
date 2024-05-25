@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Web3 from "web3";
+import { FaCoins } from "react-icons/fa";
 
 function Navbar({ account, connectWallet }) {
   const [acc, setAcc] = useState(null);
@@ -9,23 +9,30 @@ function Navbar({ account, connectWallet }) {
     }
   }, [account]);
   return (
-    <nav className="flex w-full justify-between items-center">
-      <h1 className="text-2xl capitalize font-bold">Oneos</h1>
-      <div>
-        {account ? (
-          <div className="text-xs bg-white text-orange-500 rounded-lg px-2 py-1 shadow-black shadow-sm">
-            Connected: {acc}...
-          </div>
-        ) : (
-          <button
-            className="bg-white text-orange-500 py-2 px-3 rounded-sm"
-            onClick={connectWallet}
-          >
-            Connect Wallet
-          </button>
-        )}
-      </div>
-    </nav>
+    <header className="w-full px-6 lg:px-20">
+      <nav className="flex w-full justify-between items-center">
+        <h1 className="text-2xl capitalize font-bold flex gap-2 items-center">
+          <span>
+            <FaCoins />
+          </span>{" "}
+          Oneos
+        </h1>
+        <div>
+          {account ? (
+            <div className="text-xs bg-white text-orange-500 rounded-sm px-2 lg:px-6 py-2 shadow-black shadow-xs lg:font-semibold cursor-pointer">
+              Connected: {acc}...
+            </div>
+          ) : (
+            <button
+              className="bg-white text-orange-500 py- px-3 rounded-sm cursor-pointer"
+              onClick={connectWallet}
+            >
+              Connect Wallet
+            </button>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 }
 

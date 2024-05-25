@@ -6,18 +6,18 @@ const Connect = ({ account, increaseAllowance, connectWallet, loading }) => {
       {account ? (
         <div className="flex gap-6 items-center">
           <button
-            className="bg-white text-orange-800 font-semibold rounded-md px-6 py-2 w-[100px] md:w-[150px]"
+            className="bg-white text-orange-500 font-semibold rounded-sm px-6 py-2 w-[100px] md:w-[150px] cursor-pointer hover:border hover:border-white hover:bg-transparent hover:text-white"
             onClick={increaseAllowance}
             disabled={loading}
           >
-            Airdrop
+            {loading ? "Wait..." : "Airdrop"}
           </button>
           <button
-            className="bg-white text-orange-800 font-semibold rounded-md px-6 py-2 w-[100px] md:w-[150px] text-center "
+            className="bg-white text-orange-500 font-semibold rounded-sm px-6 py-2 w-[100px] md:w-[150px] text-center  cursor-pointer hover:border hover:border-white hover:bg-transparent hover:text-white"
             onClick={increaseAllowance}
             disabled={loading}
           >
-            Mint
+            {loading ? "Wait..." : "Mint"}
           </button>
         </div>
       ) : (
