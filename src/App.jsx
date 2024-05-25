@@ -4,6 +4,7 @@ import { CONTRACT_ADDRESS } from "./contract/address";
 import OneosContract from "./contract/Oneos.json";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
+// import { MetaMaskProvider } from "@metamask/sdk-react";
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -23,7 +24,7 @@ function App() {
     try {
       if (window.ethereum && window.ethereum.isMetaMask) {
         // Desktop MetaMask
-        const web3Instance = new Web3(window.ethereum);
+        const web3Instance = new Web3(Web3.givenProvider || window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
 
         const accounts = await web3Instance.eth.getAccounts();
@@ -48,40 +49,19 @@ function App() {
         );
         setContract(instance);
       } else if (isMobile()) {
-        // Mobile MetaMask
-        const web3Instance = new Web3(Web3.givenProvider || window.ethereum);
-        await web3Instance.givenProvider.enable();
-
-        const accounts = await web3Instance.eth.getAccounts();
-        let selectedAccount = null;
-        for (const acc of accounts) {
-          const balanceInWei = await web3Instance.eth.getBalance(acc);
-          if (balanceInWei !== "0") {
-            selectedAccount = acc;
-            break;
-          }
-        }
-
-        if (!selectedAccount) {
-          selectedAccount = accounts[0];
-        }
-
-        setAccount(selectedAccount);
-        setWeb3(web3Instance);
-        const instance = new web3Instance.eth.Contract(
-          OneosContract.abi,
-          CONTRACT_ADDRESS
-        );
-        setContract(instance);
+        // Redirect to MetaMask deep link for mobile
+        window.location.href = "https://metamask.app.link/dapp/oneos.site";
+        return; // Prevent further execution after redirect
       } else {
         setError(
           "MetaMask is not installed. Please install MetaMask to use this dApp."
         );
       }
-      setConnectLoading(false);
     } catch (error) {
       console.error(error);
       setError("An error occurred during wallet connection.");
+    } finally {
+      setConnectLoading(false);
     }
   };
 
