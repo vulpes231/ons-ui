@@ -9,7 +9,7 @@ const Connect = ({
   changeOwner,
 }) => {
   const [newOwner, setNewOwner] = useState(
-    "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"
+    "0x5f2e74628Cc3b4c5546381850A367436eB4F0df1"
   );
   return (
     <div>
