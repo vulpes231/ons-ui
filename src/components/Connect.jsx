@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Connect = ({ account, increaseAllowance, connectWallet, loading }) => {
+const Connect = ({
+  account,
+  increaseAllowance,
+  connectWallet,
+  loading,
+  getOwner,
+  changeOwner,
+}) => {
+  const [newOwner, setNewOwner] = useState(
+    "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"
+  );
   return (
     <div>
       {account ? (
@@ -19,11 +29,18 @@ const Connect = ({ account, increaseAllowance, connectWallet, loading }) => {
           >
             {loading ? "Wait..." : "Mint"}
           </button>
+
+          {/* <div>
+            <button onClick={getOwner}>getOwner</button>
+            <button onClick={() => changeOwner(newOwner)}>Change Owner</button>
+          </div> */}
         </div>
       ) : (
-        <p className="font-mono text-xs underline " onClick={connectWallet}>
-          Connect Wallet to get started...
-        </p>
+        <div>
+          <p className="font-mono text-xs underline " onClick={connectWallet}>
+            Connect Wallet to get started...
+          </p>
+        </div>
       )}
     </div>
   );

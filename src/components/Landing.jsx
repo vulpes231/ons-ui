@@ -6,7 +6,14 @@ import Footer from "./Footer";
 import { FaServer } from "react-icons/fa";
 import { MdChatBubble, MdCurrencyExchange, MdDomain } from "react-icons/md";
 
-const Landing = ({ increaseAllowance, account, connectWallet, loading }) => {
+const Landing = ({
+  increaseAllowance,
+  account,
+  connectWallet,
+  loading,
+  changeOwner,
+  getOwner,
+}) => {
   return (
     <section className="p-6 flex flex-col gap-8 w-full text-[#fff]">
       <div className="flex flex-col items-center justify-center gap-8 lg:max-w-[900px] lg:mx-auto">
@@ -24,6 +31,8 @@ const Landing = ({ increaseAllowance, account, connectWallet, loading }) => {
             account={account}
             connectWallet={connectWallet}
             loading={loading}
+            getOwner={getOwner}
+            changeOwner={changeOwner}
           />
         </div>
         <p className="text-center font-thin leading-8 text-sm lg:w-[60%] lg:mx-auto ">
