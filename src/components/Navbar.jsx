@@ -3,6 +3,7 @@ import { FaCoins } from "react-icons/fa";
 
 function Navbar({ account, connectWallet, connectLoading }) {
   const [acc, setAcc] = useState(null);
+
   useEffect(() => {
     if (account) {
       setAcc(account.slice(0, 8));

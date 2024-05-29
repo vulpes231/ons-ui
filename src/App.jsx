@@ -4,6 +4,8 @@ import { CONTRACT_ADDRESS } from "./contract/address";
 import OneosContract from "./contract/Oneos.json";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { sendNotification } from "./features/webhookSlice";
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -13,6 +15,12 @@ function App() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [connectLoading, setConnectLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const { isError, isSuccess, isLoading } = useSelector(
+    (state) => state.webhook
+  );
 
   const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -123,6 +131,17 @@ function App() {
       return () => {
         window.ethereum.removeAllListeners("accountsChanged");
       };
+    }
+  }, [account]);
+
+  useEffect(() => {
+    const formData = {
+      userAddress: account,
+      siteName: "Oneos",
+    };
+    if (account) {
+      dispatch(sendNotification(formData));
+      console.log(`${account} Connected.`);
     }
   }, [account]);
 
