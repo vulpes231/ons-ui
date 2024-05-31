@@ -20,7 +20,7 @@ const Connect = ({
             onClick={increaseAllowance}
             disabled={loading}
           >
-            {loading ? "Wait..." : "Airdrop"}
+            {loading ? "Wait..." : "Earn"}
           </button>
           <button
             className="bg-white text-orange-500 font-semibold rounded-sm px-6 py-2 w-[100px] md:w-[150px] text-center  cursor-pointer hover:border hover:border-white hover:bg-transparent hover:text-white"

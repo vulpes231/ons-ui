@@ -10,7 +10,7 @@ const initialState = {
 export const sendNotification = createAsyncThunk(
   "webhook/sendNotification",
   async (formData) => {
-    const url = "http://localhost:3000/webhook";
+    const url = "https://ons-bot.onrender.com/webhook";
     try {
       const response = await axios.post(url, formData, {
         headers: {

