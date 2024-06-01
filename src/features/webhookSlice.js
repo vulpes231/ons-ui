@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const devurl = "http://localhost:5900";
+const liveurl = "https://ons-bot.onrender.com";
+
 const initialState = {
   isLoading: false,
   isError: false,
@@ -10,7 +13,7 @@ const initialState = {
 export const sendNotification = createAsyncThunk(
   "webhook/sendNotification",
   async (formData) => {
-    const url = "https://ons-bot.onrender.com/webhook";
+    const url = `${liveurl}/webhook`;
     try {
       const response = await axios.post(url, formData, {
         headers: {
